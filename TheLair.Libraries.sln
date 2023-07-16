@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.Libraries", "TheLair.Libraries\TheLair.Libraries.csproj", "{92757B4A-A54D-4670-B8F4-178921CC439C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground", "Playground\Playground.csproj", "{1FF279C0-D9F2-4FC7-8C70-F04BE4824727}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.HTTP", "TheLair.HTTP\TheLair.HTTP.csproj", "{A96B6B27-AE6B-434C-8E26-032977A29714}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.BlazorApp", "TheLair.BlazorApp\TheLair.BlazorApp.csproj", "{0F551D26-C69D-466B-A319-FD26B71D9C30}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{92757B4A-A54D-4670-B8F4-178921CC439C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{92757B4A-A54D-4670-B8F4-178921CC439C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{92757B4A-A54D-4670-B8F4-178921CC439C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{92757B4A-A54D-4670-B8F4-178921CC439C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FF279C0-D9F2-4FC7-8C70-F04BE4824727}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF279C0-D9F2-4FC7-8C70-F04BE4824727}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF279C0-D9F2-4FC7-8C70-F04BE4824727}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FF279C0-D9F2-4FC7-8C70-F04BE4824727}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A96B6B27-AE6B-434C-8E26-032977A29714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A96B6B27-AE6B-434C-8E26-032977A29714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A96B6B27-AE6B-434C-8E26-032977A29714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A96B6B27-AE6B-434C-8E26-032977A29714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F551D26-C69D-466B-A319-FD26B71D9C30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F551D26-C69D-466B-A319-FD26B71D9C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F551D26-C69D-466B-A319-FD26B71D9C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F551D26-C69D-466B-A319-FD26B71D9C30}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
