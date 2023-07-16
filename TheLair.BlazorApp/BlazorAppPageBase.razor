@@ -1,0 +1,42 @@
+﻿@typeparam TStateManager where TStateManager : class
+
+@inject TStateManager _StateManager
+@inject Router _Router
+
+@code
+{
+    protected TStateManager StateManager = null!;
+    protected List<string> RequiredClaims = new List<string>();
+    protected Router Router = null!;
+
+    protected override Task OnInitializedAsync()
+    {
+        StateManager = _StateManager;
+        Router = _Router;
+
+        ServiceInjection();
+        BuildRequiredClaims();
+        AuthenticationCheck();
+        
+        if (!ClaimChallenge())
+        {
+            Router.NavigateTo("/", true);
+            return (Task.CompletedTask);
+        }
+
+        Initialize();
+
+        return (Task.CompletedTask);
+    }
+
+    public virtual void ServiceInjection() { }
+    public virtual void BuildRequiredClaims() { }
+    public virtual void AuthenticationCheck() { }
+
+    public virtual bool ClaimChallenge()
+    {
+        return (true);
+    }
+
+    public virtual void Initialize() { }
+}
