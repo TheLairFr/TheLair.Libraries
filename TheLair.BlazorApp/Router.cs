@@ -12,7 +12,7 @@ namespace TheLair.BlazorApp;
 
 public class Router
 {
-    private NavigationManager NavigationManager;
+    private readonly NavigationManager NavigationManager;
 
     public Router(NavigationManager navigationManager)
     {

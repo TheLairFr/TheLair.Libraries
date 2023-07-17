@@ -5,9 +5,17 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Playground", "Playground\Playground.csproj", "{1FF279C0-D9F2-4FC7-8C70-F04BE4824727}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.HTTP", "TheLair.HTTP\TheLair.HTTP.csproj", "{A96B6B27-AE6B-434C-8E26-032977A29714}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheLair.HTTP", "TheLair.HTTP\TheLair.HTTP.csproj", "{A96B6B27-AE6B-434C-8E26-032977A29714}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.BlazorApp", "TheLair.BlazorApp\TheLair.BlazorApp.csproj", "{0F551D26-C69D-466B-A319-FD26B71D9C30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheLair.BlazorApp", "TheLair.BlazorApp\TheLair.BlazorApp.csproj", "{0F551D26-C69D-466B-A319-FD26B71D9C30}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.ASP_Net", "TheLair.ASP_Net\TheLair.ASP_Net.csproj", "{22330EA0-2B90-4102-AEAB-E6DF0696FD0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.Database", "TheLair.Database\TheLair.Database.csproj", "{9DB3C57A-0FFB-4172-A150-377BB17BF5B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.JWT", "TheLair.JWT\TheLair.JWT.csproj", "{E9A2DF00-FE82-4900-A0C1-1BCD331F18EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TheLair.Extensions", "TheLair.Extensions\TheLair.Extensions.csproj", "{F4C7343C-74FB-429A-8F5F-92DA46EE379C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,22 @@ Global
 		{0F551D26-C69D-466B-A319-FD26B71D9C30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F551D26-C69D-466B-A319-FD26B71D9C30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F551D26-C69D-466B-A319-FD26B71D9C30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22330EA0-2B90-4102-AEAB-E6DF0696FD0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22330EA0-2B90-4102-AEAB-E6DF0696FD0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22330EA0-2B90-4102-AEAB-E6DF0696FD0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22330EA0-2B90-4102-AEAB-E6DF0696FD0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DB3C57A-0FFB-4172-A150-377BB17BF5B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DB3C57A-0FFB-4172-A150-377BB17BF5B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DB3C57A-0FFB-4172-A150-377BB17BF5B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DB3C57A-0FFB-4172-A150-377BB17BF5B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9A2DF00-FE82-4900-A0C1-1BCD331F18EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9A2DF00-FE82-4900-A0C1-1BCD331F18EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9A2DF00-FE82-4900-A0C1-1BCD331F18EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9A2DF00-FE82-4900-A0C1-1BCD331F18EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4C7343C-74FB-429A-8F5F-92DA46EE379C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4C7343C-74FB-429A-8F5F-92DA46EE379C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4C7343C-74FB-429A-8F5F-92DA46EE379C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4C7343C-74FB-429A-8F5F-92DA46EE379C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

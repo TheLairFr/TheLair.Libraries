@@ -9,7 +9,12 @@
     protected List<string> RequiredClaims = new List<string>();
     protected Router Router = null!;
 
-    protected override Task OnInitializedAsync()
+    protected sealed override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    protected sealed override async Task OnInitializedAsync()
     {
         StateManager = _StateManager;
         Router = _Router;
@@ -21,12 +26,9 @@
         if (!ClaimChallenge())
         {
             Router.NavigateTo("/", true);
-            return (Task.CompletedTask);
         }
 
-        Initialize();
-
-        return (Task.CompletedTask);
+        await Initialize();
     }
 
     public virtual void ServiceInjection() { }
@@ -38,5 +40,5 @@
         return (true);
     }
 
-    public virtual void Initialize() { }
+    public virtual Task Initialize() => Task.CompletedTask;
 }

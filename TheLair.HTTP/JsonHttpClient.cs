@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -10,10 +11,23 @@ namespace TheLair.HTTP
     {
         private readonly HttpClient Client = new HttpClient();
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public HttpClient GetInnerClient()
+        {
+            return (Client);
+        }
+
         public JsonHttpClient Configure(Action<HttpClient> action)
         {
             action(Client);
             return (this);
+        }
+
+        public async Task<string> GetAsString(string url)
+        {
+            string result = await Client.GetStringAsync(url) ?? throw new Exception("ERROR");
+
+            return (result);
         }
 
         public async Task<T> Get<T>(string url)
