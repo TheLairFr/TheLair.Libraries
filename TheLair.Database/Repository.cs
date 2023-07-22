@@ -11,41 +11,24 @@ public abstract class Repository
 
 }
 
-public abstract class Repository<T> : Repository
-    where T : BDDContext<T>
-{
-    protected readonly T Context;
-
-    protected Repository(T context)
-    {
-        Context = context;
-    }
-}
-
-public abstract class Repository<TEntity, TRepository, TContext> : Repository<TContext>, IRepository<TEntity>
+public abstract class Repository<TEntity, TRepository, TContext> : Repository, IRepository<TEntity>
     where TEntity : Entity<TEntity>
     where TRepository : Repository<TEntity, TRepository, TContext>
     where TContext : BDDContext<TContext>
 {
+    private readonly TContext Context;
     private DbSet<TEntity> InnerSet = null!;
     protected IQueryable<TEntity> Set = null!;
-
-    protected Repository(TContext ctx) : base(ctx) { }
+    
+    protected Repository(TContext context)
+    {
+        Context = context;
+    }
 
     protected void UseSet(DbSet<TEntity> set)
     {
         InnerSet = set;
         Set = InnerSet.Where(i => i.Enabled);
-    }
-
-    public IQueryable<TEntity> AllAsQueryable()
-    {
-        return (Set);
-    }
-
-    public TEntity[] All()
-    {
-        return (Set.ToArray());
     }
 
     public TEntity Add(TEntity entity)

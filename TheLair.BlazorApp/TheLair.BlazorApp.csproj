@@ -4,6 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<AssemblyVersion>0.1.0</AssemblyVersion>
   </PropertyGroup>
 
 

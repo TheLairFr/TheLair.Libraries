@@ -17,9 +17,14 @@ public class JWTService
 
     public string Forge(object claims)
     {
-        string issuer = Config.Issuer;
-        string audience = Config.Audience;
-        byte[] key = Encoding.ASCII.GetBytes(Config.Key);
+        return (InnerForge(claims, Config));
+    }
+
+    internal static string InnerForge(object claims, JWTConfig config)
+    {
+        string issuer = config.Issuer;
+        string audience = config.Audience;
+        byte[] key = Encoding.ASCII.GetBytes(config.Key);
         SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(),
