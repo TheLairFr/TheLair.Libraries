@@ -1,24 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace TheLair.Database
+namespace TheLair.Database;
+
+public abstract class BDDContext : DbContext
 {
-    public abstract class BDDContext : DbContext
+    public string? ConnectionString;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public string? ConnectionString;
+        EntityBuilder b = new EntityBuilder(modelBuilder);
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            EntityBuilder b = new EntityBuilder(modelBuilder);
-
-            ModelCreating(b);
-        }
-
-        public abstract void ModelCreating(EntityBuilder builder);
+        ModelCreating(b);
     }
 
-    public abstract class BDDContext<T> : BDDContext 
-        where T : BDDContext<T>
-    {
+    public abstract void ModelCreating(EntityBuilder builder);
+}
+
+public abstract class BDDContext<T> : BDDContext 
+    where T : BDDContext<T>
+{
         
-    }
 }

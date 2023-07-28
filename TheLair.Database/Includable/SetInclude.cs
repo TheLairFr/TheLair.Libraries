@@ -6,7 +6,7 @@ namespace TheLair.Database.Includable;
 
 public class SetInclude<TEntity, TTarget, TRepository>
     where TEntity : Entity<TEntity>
-    where TRepository : IRepository<TEntity>
+    where TRepository : Repository<TEntity>
 {
     public readonly TRepository Repository;
     internal readonly IIncludableQueryable<TEntity, TTarget> Queryable;

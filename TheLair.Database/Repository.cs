@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using TheLair.Database;
@@ -6,24 +7,13 @@ using TheLair.Database.Includable;
 
 namespace TheLair.Database;
 
-public abstract class Repository
-{
+public abstract class Repository { }
 
-}
-
-public abstract class Repository<TEntity, TRepository, TContext> : Repository, IRepository<TEntity>
+public abstract class Repository<TEntity>
     where TEntity : Entity<TEntity>
-    where TRepository : Repository<TEntity, TRepository, TContext>
-    where TContext : BDDContext<TContext>
 {
-    private readonly TContext Context;
     private DbSet<TEntity> InnerSet = null!;
     protected IQueryable<TEntity> Set = null!;
-    
-    protected Repository(TContext context)
-    {
-        Context = context;
-    }
 
     protected void UseSet(DbSet<TEntity> set)
     {
@@ -34,7 +24,7 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository, I
     public TEntity Add(TEntity entity)
     {
         InnerSet.Add(entity);
-        
+
         return (entity);
     }
 
@@ -70,7 +60,7 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository, I
         if (!hardDelete)
         {
             entity.Enabled = false;
-            
+
             Update(entity);
         }
         else
@@ -85,6 +75,24 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository, I
         {
             Delete(entity, hardDelete);
         }
+    }
+
+    public void ApplySet(IQueryable<TEntity> set)
+    {
+        Set = set;
+    }
+}
+
+public abstract class Repository<TEntity, TRepository, TContext> : Repository<TEntity>
+    where TEntity : Entity<TEntity>
+    where TRepository : Repository<TEntity, TRepository, TContext>
+    where TContext : BDDContext<TContext>
+{
+    private readonly TContext Context;
+    
+    protected Repository(TContext context)
+    {
+        Context = context;
     }
 
     public void Save()
@@ -115,10 +123,5 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository, I
     public TEntity? WithIdOrNull(Guid id)
     {
         return (Set.FirstOrDefault(i => i.Id == id));
-    }
-
-    public void ApplySet(IQueryable<TEntity> set)
-    {
-        Set = set;
     }
 }

@@ -24,30 +24,38 @@ public class ManualJWTService<TToken>
 
     public bool VerifyToken(string token)
     {
-        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
-        byte[] key = Encoding.ASCII.GetBytes(Configuration.Key);
-        
-        if (!string.IsNullOrEmpty(token))
+        try
         {
-            var tokenValidationParameters = new TokenValidationParameters
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(Configuration.Key);
+
+            if (!string.IsNullOrEmpty(token))
             {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                ClockSkew = TimeSpan.Zero
-            };
+                var tokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
 
-            tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
-            JwtSecurityToken? jwtSecurityToken = securityToken as JwtSecurityToken;
+                tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+                JwtSecurityToken? jwtSecurityToken = securityToken as JwtSecurityToken;
 
-            if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512, StringComparison.InvariantCultureIgnoreCase))
-                return (false);
+                if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha512, StringComparison.InvariantCultureIgnoreCase))
+                    return (false);
 
-            Authenticated = ExtractTokenValues(token);
+                Authenticated = ExtractTokenValues(token);
 
-            return (Authenticated);
+                return (Authenticated);
+            }
         }
+        catch (SecurityTokenException)
+        {
+            return (false);
+        }
+        
 
         return (false);
     }
