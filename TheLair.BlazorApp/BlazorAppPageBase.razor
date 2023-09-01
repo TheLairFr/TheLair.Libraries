@@ -19,26 +19,25 @@
         StateManager = _StateManager;
         Router = _Router;
 
-        ServiceInjection();
-        BuildRequiredClaims();
-        AuthenticationCheck();
+        await ServiceInjection();
+        await BuildRequiredClaims();
+        await BeforeAuthentication();
+        await AuthenticationCheck();
         
-        if (!ClaimChallenge())
+        if (!await ClaimChallenge())
         {
+            await ClaimChallengeFailed();
             Router.NavigateTo("/", true);
         }
 
-        await Initialize();
+        await AfterAuthentication();
     }
 
-    public virtual void ServiceInjection() { }
-    public virtual void BuildRequiredClaims() { }
-    public virtual void AuthenticationCheck() { }
-
-    public virtual bool ClaimChallenge()
-    {
-        return (true);
-    }
-
-    public virtual Task Initialize() => Task.CompletedTask;
+    public virtual Task ServiceInjection() => Task.CompletedTask;
+    public virtual Task BuildRequiredClaims() => Task.CompletedTask;
+    public virtual Task BeforeAuthentication() => Task.CompletedTask;
+    public virtual Task AuthenticationCheck() => Task.CompletedTask;
+    public virtual Task<bool> ClaimChallenge() => Task.FromResult(true);
+    public virtual Task ClaimChallengeFailed() => Task.CompletedTask;
+    public virtual Task AfterAuthentication() => Task.CompletedTask;
 }

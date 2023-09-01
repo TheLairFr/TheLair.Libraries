@@ -13,7 +13,7 @@ public static class ContextHelper
         {
             MigrationInfo<T> migration = i.GetService<MigrationInfo<T>>()!;
             T context = fct(i);
-
+            
             if (!migration.Migated)
             {
                 migration.Migated = true;

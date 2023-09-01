@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using TheLair.Database;
 using TheLair.Database.Includable;
 
 namespace TheLair.Database;
 
 public abstract class Repository { }
 
-public abstract class Repository<TEntity>
+public abstract class Repository<TEntity> : Repository
     where TEntity : Entity<TEntity>
 {
     private DbSet<TEntity> InnerSet = null!;
@@ -80,6 +78,16 @@ public abstract class Repository<TEntity>
     public void ApplySet(IQueryable<TEntity> set)
     {
         Set = set;
+    }
+
+    public NewOrExistingEntity<TEntity> NewEntity(TEntity entity)
+    {
+        return (new NewOrExistingEntity<TEntity>(entity, i => Add(i)));
+    }
+
+    public NewOrExistingEntity<TEntity> ExistingEntity(TEntity entity)
+    {
+        return (new NewOrExistingEntity<TEntity>(entity, Update));
     }
 }
 
