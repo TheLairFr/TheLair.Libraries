@@ -27,7 +27,12 @@
         if (!await ClaimChallenge())
         {
             await ClaimChallengeFailed();
-            Router.NavigateTo("/", true);
+            RoutingInfo routing = await GetRedirectionRoute();
+
+            Router.NavigateTo(routing.Path, routing.Reload);
+
+            if (routing.StopPipeline)
+                return;
         }
 
         await AfterAuthentication();
@@ -39,5 +44,6 @@
     public virtual Task AuthenticationCheck() => Task.CompletedTask;
     public virtual Task<bool> ClaimChallenge() => Task.FromResult(true);
     public virtual Task ClaimChallengeFailed() => Task.CompletedTask;
+    public virtual Task<RoutingInfo> GetRedirectionRoute() => Task.FromResult(new RoutingInfo());
     public virtual Task AfterAuthentication() => Task.CompletedTask;
 }
