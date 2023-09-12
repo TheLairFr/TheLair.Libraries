@@ -25,14 +25,18 @@ public abstract class StateManager<TState> : IStateManager
         if (!LocalStorage.ContainKey("ApplicationState"))
             LocalStorage.SetItem("ApplicationState", BuildState());
 
-        TState state = LocalStorage.GetItem<TState>("ApplicationState") ?? BuildState();
-
-        /*foreach (Action<TState> sessionWrite in SessionWrites)
+        try
         {
-            sessionWrite(State);
-        }*/
+            TState state = LocalStorage.GetItem<TState>("ApplicationState") ?? BuildState();
 
-        return state;
+            return state;
+        }
+        catch
+        {
+            // ignored
+        }
+
+        return (BuildState());
     }
 
     public TState WriteState(Action<TState> fct)
