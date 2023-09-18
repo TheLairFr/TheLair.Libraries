@@ -14,6 +14,8 @@ public class Router
 {
     private readonly NavigationManager NavigationManager;
 
+    public string Uri => NavigationManager.Uri;
+
     public Router(NavigationManager navigationManager)
     {
         NavigationManager = navigationManager;
