@@ -34,4 +34,9 @@ public class Response<T> : Response
     public Response() { }
 
     public Response(Exception e) : base(e) { }
+
+    public static implicit operator T(Response<T> instance)
+    {
+        return (instance.Content);
+    }
 }

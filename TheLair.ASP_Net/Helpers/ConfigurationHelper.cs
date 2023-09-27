@@ -16,7 +16,7 @@ public static class ConfigurationHelper
     public static void MapConfigurationFromConfig<TConfigClass>(this IServiceCollection services, string configString) 
         where TConfigClass : class, new()
     {
-        services.AddSingleton<TConfigClass>(i =>
+        services.AddSingleton(i =>
         {
             IConfiguration configuration = i.GetRequiredService<IConfiguration>();
             IConfigurationSection section = configuration.GetSection(configString);
