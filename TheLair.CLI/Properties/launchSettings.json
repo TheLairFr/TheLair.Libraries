@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TheLair.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "api C:\\Users\\Nicolas\\Documents\\Projects\\NWS-Pointage\\PortailV2\\Server\\bin\\Debug\\net7.0\\PortailV2.Server.dll"
+    }
+  }
+}
