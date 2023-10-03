@@ -1,17 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using TheLair.ASP_Net.OneOfLogic;
 using TheLair.ASP_Net.Serializers;
 
 namespace TheLair.ASP_Net.Helpers;
 
 public static class OneOfHelper
 {
-    public static IMvcBuilder ConfigureOneOf(this IMvcBuilder builder)
+    public static IServiceCollection ConfigureOneOf(this IServiceCollection services)
     {
-        builder.AddJsonOptions(o =>
-        {
-            o.JsonSerializerOptions.Converters.Add(new OneOfSerializer());
-        });
+        services.AddControllersWithViews(o => o.Filters.Add(new OneOfFilter()))
+            .AddJsonOptions(o =>
+            {
+                o.JsonSerializerOptions.Converters.Add(new OneOfSerializer());
+            });
 
-        return (builder);
+        return (services);
     }
 }

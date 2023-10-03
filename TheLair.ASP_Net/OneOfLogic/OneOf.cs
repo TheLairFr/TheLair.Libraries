@@ -1,4 +1,6 @@
-﻿namespace TheLair.ASP_Net;
+﻿using TheLair.ASP_Net.OneOfLogic.StatusCodes;
+
+namespace TheLair.ASP_Net.OneOfLogic;
 
 public abstract class OneOf
 {
@@ -11,8 +13,11 @@ public abstract class OneOf
 
     public object GetValue()
     {
-        return (Value);
+        return Value;
     }
+
+    public static Forbidden Forbidden => OneOfStatusCodeCache.Forbidden;
+    public static NotFound NotFound => OneOfStatusCodeCache.NotFound;
 }
 
 public class OneOf<T0, T1> : OneOf
