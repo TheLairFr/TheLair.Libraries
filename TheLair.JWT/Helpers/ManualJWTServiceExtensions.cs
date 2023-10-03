@@ -8,14 +8,17 @@ namespace TheLair.JWT.Helpers;
 
 public static class ManualJWTServiceExtensions
 {
-    public static void AddManualJWTService<TService, TToken>(this IServiceCollection services) where TService : ManualJWTService<TToken>
+    public static void AddManualJWTService<TService, TToken>(this IServiceCollection services, Action<JWTConfig>? fct = null) where TService : ManualJWTService<TToken>
     {
         services.AddScoped<TService>();
         services.AddSingleton(i =>
         {
             IConfiguration config = i.GetService<IConfiguration>()!;
+            JWTConfig c = new JWTConfig(config["Jwt:Issuer"]!, config["Jwt:Audience"]!, config["Jwt:Key"]!);
 
-            return new JWTConfig(config["Jwt:Issuer"]!, config["Jwt:Audience"]!, config["Jwt:Key"]!);
+            fct?.Invoke(c);
+
+            return (c);
         });
     }
 
