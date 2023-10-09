@@ -16,7 +16,9 @@ public class OneOfFilter : IResultFilter
         context.Result = data.Value switch
         {
             Forbidden => new ForbidResult(),
+            ForbidResult => new ForbidResult(),
             NotFound => new NotFoundResult(),
+            NotFoundResult => new NotFoundResult(),
             _ => context.Result
         };
     }
