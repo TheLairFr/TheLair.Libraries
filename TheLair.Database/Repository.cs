@@ -92,7 +92,7 @@ public abstract class Repository<TEntity> : Repository
 }
 
 public abstract class Repository<TEntity, TRepository, TContext> : Repository<TEntity>
-    where TEntity : Entity<TEntity>
+    where TEntity : Entity<TEntity>, new()
     where TRepository : Repository<TEntity, TRepository, TContext>
     where TContext : BDDContext<TContext>
 {
@@ -131,5 +131,21 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository<TE
     public TEntity? WithIdOrNull(Guid id)
     {
         return (Set.FirstOrDefault(i => i.Id == id));
+    }
+
+    public IQueryable<TEntity> WithIdAsQueryable(Guid id)
+    {
+        return (Set
+            .Where(i => i.Id == id)
+            .Take(1));
+    }
+
+    public NewOrExistingEntity<TEntity> RetrieveOrCreate(Guid id)
+    {
+        TEntity? found = WithIdOrNull(id);
+
+        return (found != null
+            ? ExistingEntity(found)
+            : NewEntity(new()));
     }
 }

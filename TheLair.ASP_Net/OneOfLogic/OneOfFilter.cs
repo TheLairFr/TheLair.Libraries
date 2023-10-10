@@ -12,7 +12,7 @@ public class OneOfFilter : IResultFilter
 
         OneOf data = (obj.Value as OneOf)!;
 
-        if (data.Value is StatusCodeResult value)
+        if (data.Value is IActionResult value)
             context.Result = value;
     }
 
