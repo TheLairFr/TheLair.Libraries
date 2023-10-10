@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using TheLair.ASP_Net.OneOfLogic.StatusCodes;
 
 namespace TheLair.ASP_Net.OneOfLogic;
 
@@ -13,14 +12,8 @@ public class OneOfFilter : IResultFilter
 
         OneOf data = (obj.Value as OneOf)!;
 
-        context.Result = data.Value switch
-        {
-            Forbidden => new ForbidResult(),
-            ForbidResult => new ForbidResult(),
-            NotFound => new NotFoundResult(),
-            NotFoundResult => new NotFoundResult(),
-            _ => context.Result
-        };
+        if (data.Value is StatusCodeResult value)
+            context.Result = value;
     }
 
     public void OnResultExecuted(ResultExecutedContext context) { }
