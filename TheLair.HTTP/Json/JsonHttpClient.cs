@@ -11,6 +11,13 @@ namespace TheLair.HTTP.Json
     {
         private readonly HttpClient Client = new HttpClient();
 
+        public JsonHttpClient() { }
+
+        public JsonHttpClient(HttpClient client)
+        {
+            Client = client;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public HttpClient GetInnerClient()
         {
