@@ -10,6 +10,6 @@ public static class DateTimeExtensions
 {
     public static string ToURLCompatibleDateTime(this System.DateTime date)
     {
-        return (date.ToString("s"));
+        return date.ToString("s");
     }
 }

@@ -19,6 +19,11 @@ public abstract class Repository<TEntity> : Repository
         Set = InnerSet.Where(i => i.Enabled);
     }
 
+    public IQueryable<TEntity> All()
+    {
+        return (Set);
+    }
+
     public TEntity Add(TEntity entity)
     {
         InnerSet.Add(entity);
@@ -147,5 +152,13 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository<TE
         return (found != null
             ? ExistingEntity(found)
             : NewEntity(new()));
+    }
+
+    public NewOrExistingEntity<TEntity> MakeNewOrExisting(TEntity? entity, Func<TEntity> factory)
+    {
+        if (entity != null)
+            return (ExistingEntity(entity));
+
+        return (NewEntity(factory()));
     }
 }
