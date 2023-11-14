@@ -1,5 +1,5 @@
 using TheLair.Extensions.Object;
-
+using TheLair.Extensions.Task;
 
 
 namespace Playground;
@@ -21,5 +21,12 @@ public class Extensions
         Assert.AreEqual("Test", dict["Truc"]);
         Assert.AreEqual(55f, dict["OwO"]);
         Assert.AreEqual(3, dict.Count);
+    }
+
+    [TestMethod]
+    public async Task AwaitableTuple()
+    {
+        var (test, truc) = await (Task.FromResult(42), Task.FromResult(42));
+
     }
 }
