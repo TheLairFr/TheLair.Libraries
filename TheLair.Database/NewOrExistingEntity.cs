@@ -15,4 +15,9 @@ public class NewOrExistingEntity<T> where T : Entity<T>
     {
         PersistAction(Entity);
     }
+
+    public static implicit operator T(NewOrExistingEntity<T> instance)
+    {
+        return (instance.Entity);
+    }
 }
