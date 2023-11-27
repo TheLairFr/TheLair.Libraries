@@ -78,11 +78,11 @@ public class ClaimChallenger<T>
                 Errors = messages
             });
 
-        bool success = challenges.Where(i => !i.Key)
+        IEnumerable<ClaimChallenge<T>> found = challenges.Where(i => !i.Key)
             .SelectMany(i => i)
-            .Any(i => i.Challenge(roles));
+            .ToArray();
 
-        if (success)
+        if (!found.Any() || found.Any(i => i.Challenge(roles)))
             return (new ChallengeResult
             {
                 Success = true
