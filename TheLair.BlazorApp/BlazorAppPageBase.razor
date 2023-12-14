@@ -18,15 +18,17 @@
         StateManager = _StateManager;
         Router = _Router;
 
-        await ServiceInjection();
-        await BuildRequiredClaims();
-        await BeforeAuthentication();
-        await AuthenticationCheck();
-        
-        if (!await ClaimChallenge())
+        await (Task.Run(ServiceInjection), ServiceInjectionAsync());
+        await (Task.Run(BuildRequiredClaims), BuildRequiredClaimsAsync());
+        await (Task.Run(BeforeAuthentication), BeforeAuthenticationAsync()); 
+        await (Task.Run(AuthenticationCheck), AuthenticationCheckAsync());
+
+        (bool, bool) r = await (Task.Run(ClaimChallenge), ClaimChallengeAsync());
+
+        if (!r.Item1 || !r.Item2)
         {
-            await ClaimChallengeFailed();
-            RoutingInfo routing = await GetRedirectionRoute();
+            await (Task.Run(ClaimChallengeFailed), ClaimChallengeFailedAsync());
+            RoutingInfo routing = GetRedirectionRoute();
 
             Router.NavigateTo(routing.Path, routing.Reload);
 
@@ -34,15 +36,22 @@
                 return;
         }
 
-        await AfterAuthentication();
+        await (Task.Run(AfterAuthentication), AfterAuthenticationAsync());
     }
 
-    public virtual Task ServiceInjection() => Task.CompletedTask;
-    public virtual Task BuildRequiredClaims() => Task.CompletedTask;
-    public virtual Task BeforeAuthentication() => Task.CompletedTask;
-    public virtual Task AuthenticationCheck() => Task.CompletedTask;
-    public virtual Task<bool> ClaimChallenge() => Task.FromResult(true);
-    public virtual Task ClaimChallengeFailed() => Task.CompletedTask;
-    public virtual Task<RoutingInfo> GetRedirectionRoute() => Task.FromResult(new RoutingInfo());
-    public virtual Task AfterAuthentication() => Task.CompletedTask;
+    protected virtual void ServiceInjection() { }
+    protected virtual Task ServiceInjectionAsync() => Task.CompletedTask;
+    protected virtual void BuildRequiredClaims() { }
+    protected virtual Task BuildRequiredClaimsAsync() => Task.CompletedTask;
+    protected virtual void BeforeAuthentication() { }
+    protected virtual Task BeforeAuthenticationAsync() => Task.CompletedTask;
+    protected virtual void AuthenticationCheck() { }
+    protected virtual Task AuthenticationCheckAsync() => Task.CompletedTask;
+    protected virtual bool ClaimChallenge() => true;
+    protected virtual Task<bool> ClaimChallengeAsync() => Task.FromResult(true);
+    protected virtual void ClaimChallengeFailed() { }
+    protected virtual Task ClaimChallengeFailedAsync() => Task.CompletedTask;
+    protected virtual RoutingInfo GetRedirectionRoute() => new RoutingInfo();
+    protected virtual void AfterAuthentication() { }
+    protected virtual Task AfterAuthenticationAsync() => Task.CompletedTask;
 }
