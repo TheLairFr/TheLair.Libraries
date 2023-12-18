@@ -13,6 +13,7 @@ namespace TheLair.BlazorApp;
 public class Router
 {
     private readonly NavigationManager NavigationManager;
+    private string SavedURL = "";
 
     public string Uri => NavigationManager.Uri;
 
@@ -34,7 +35,11 @@ public class Router
         if (!QueryHelpers.ParseQuery(NavigationManager.Uri.Split("?")[1]).TryGetValue(parameter, out StringValues value))
             return String.Empty;
 
-        Console.WriteLine("found");
         return (value.ToString());
+    }
+
+    public void StoreURL()
+    {
+        SavedURL = Uri;
     }
 }
