@@ -13,7 +13,7 @@ namespace TheLair.BlazorApp;
 public class Router
 {
     private readonly NavigationManager NavigationManager;
-    private string SavedURL = "";
+    public string SavedURL = "";
 
     public string Uri => NavigationManager.Uri;
 
