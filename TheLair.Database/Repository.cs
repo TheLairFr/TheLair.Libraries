@@ -145,13 +145,22 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository<TE
             .Take(1));
     }
 
-    public NewOrExistingEntity<TEntity> RetrieveOrCreate(Guid id)
+    public NewOrExistingEntity<TEntity> MakeNewOrExisting(Func<TEntity, bool> selector, Func<TEntity> factory)
+    {
+        TEntity? found = Set.FirstOrDefault(selector);
+
+        return (found != null
+            ? ExistingEntity(found)
+            : NewEntity(factory()));
+    }
+
+    public NewOrExistingEntity<TEntity> MakeNewOrExisting(Guid id, Func<TEntity> factory)
     {
         TEntity? found = WithIdOrNull(id);
 
         return (found != null
             ? ExistingEntity(found)
-            : NewEntity(new()));
+            : NewEntity(factory()));
     }
 
     public NewOrExistingEntity<TEntity> MakeNewOrExisting(TEntity? entity, Func<TEntity> factory)

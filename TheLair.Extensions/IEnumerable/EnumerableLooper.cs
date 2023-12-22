@@ -24,13 +24,18 @@ public class EnumerableLooper<T>
         return (Enumerable[Idx++]);
     }
 
-    public IEnumerable<T> Take(int count)
+    private IEnumerable<T> InnerTake(int count)
     {
         while (count > 0)
         {
             yield return (Take());
             --count;
         }
+    }
+
+    public T[] Take(int count)
+    {
+        return (InnerTake(count).ToArray());
     }
 
     public IEnumerable<T> TakeRemaining()
