@@ -46,6 +46,7 @@ namespace TheLair.HTTP.Json
 
                 return (new Response
                 {
+                    Message = result,
                     Code = result.StatusCode
                 });
             }
@@ -63,6 +64,7 @@ namespace TheLair.HTTP.Json
 
                 return (new Response<T>
                 {
+                    Message = result,
                     Code = result.StatusCode,
                     Content = (resolver == null 
                         ? JsonConvert.DeserializeObject<T>(await result.Content.ReadAsStringAsync())!
