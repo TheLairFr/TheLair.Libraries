@@ -33,9 +33,26 @@ public static class JWTServiceHelper
 
         services.AddSingleton<JWTConfig>(i =>
         {
-            IConfiguration config = i.GetService<IConfiguration>()!;
+            IConfiguration config = i.GetRequiredService<IConfiguration>();
 
-            return new JWTConfig(config["Jwt:Issuer"]!, config["Jwt:Audience"]!, config["Jwt:Key"]!);
+            try
+            {
+                return new JWTConfig(config["Jwt:Issuer"]!, config["Jwt:Audience"]!, config["Jwt:Key"]!);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Missing Configuration for JWT !");
+                Console.WriteLine("Please use this section in appsettings.json:");
+                Console.WriteLine("""
+                                  "JWT": {
+                                    "Issuer": "[Issuer]",
+                                    "Audience": "[Audience]",
+                                    "Key": "S4lTC0d3123456789123456789_"
+                                  }
+                                  """);
+                throw;
+            }
+            
         });
         services.AddScoped<JWTService>();
     }
