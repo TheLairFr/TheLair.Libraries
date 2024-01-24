@@ -21,7 +21,7 @@ public class BaseJWTService
         Config = config;
     }
 
-    public virtual T? ExtractTokenValues<T>(string token)
+    public static T? InnerExtraction<T>(string token)
     {
         string base64String = token.Split('.')[1];
         int length = base64String.Length % 4;
@@ -37,6 +37,11 @@ public class BaseJWTService
         string decodedString = Encoding.UTF8.GetString(data);
 
         return (JsonConvert.DeserializeObject<T>(decodedString));
+    }
+
+    public virtual T? ExtractTokenValues<T>(string token)
+    {
+        return (InnerExtraction<T>(token));
     }
 
     public string Forge(object claims)

@@ -11,7 +11,8 @@ public class Response
 {
     public HttpStatusCode Code { get; set; }
     public Exception? Exception { get; set; }
-    public HttpResponseMessage Message { get; set; }
+    public HttpResponseMessage Message { get; set; } = null!;
+    public string ContentMime => Message.Content.Headers.ContentType?.MediaType ?? "";
 
     public Response() { }
 
