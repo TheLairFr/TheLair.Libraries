@@ -14,6 +14,11 @@ public partial class JsonHttpClient
         return (InternalExceptionHandler(() => Client.GetAsync(url), async r => await r.Content.ReadAsStringAsync()));
     }
 
+    public Task<Response> Get(string url)
+    {
+        return (InternalExceptionHandler(() => Client.GetAsync(url)));
+    }
+
     public Task<Response<T>> Get<T>(string url) 
         where T : class
     {
