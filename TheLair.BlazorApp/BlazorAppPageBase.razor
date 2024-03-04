@@ -8,12 +8,12 @@
     protected TStateManager StateManager = null!;
     protected Router Router = null!;
 
-    protected sealed override void OnInitialized()
+    protected sealed override void OnParametersSet()
     {
-        base.OnInitialized();
+        base.OnParametersSet();
     }
 
-    protected sealed override async Task OnInitializedAsync()
+    protected sealed override async Task OnParametersSetAsync()
     {
         StateManager = _StateManager;
         Router = _Router;
