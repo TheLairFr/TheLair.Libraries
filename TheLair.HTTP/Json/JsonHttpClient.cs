@@ -31,7 +31,7 @@ namespace TheLair.HTTP.Json
             return this;
         }
 
-        public HttpContent PrepareContent(object obj)
+        protected HttpContent PrepareContent(object obj)
         {
             string data = JsonConvert.SerializeObject(obj);
 

@@ -10,7 +10,7 @@ namespace TheLair.HTTP.Json;
 public partial class JsonHttpClient
 {
 
-    public Task<Response> Put<T>(string url, T instance) 
+    protected Task<Response> Put<T>(string url, T instance) 
         where T : class
     {
         HttpContent content = PrepareContent(instance);
@@ -18,7 +18,7 @@ public partial class JsonHttpClient
         return (InternalExceptionHandler(() => Client.PutAsync(url, content)));
     }
 
-    public Task<Response<T>> Put<T, U>(string url, U instance)
+    protected Task<Response<T>> Put<T, U>(string url, U instance)
         where T : class
         where U : class
     {

@@ -10,14 +10,14 @@ namespace TheLair.HTTP.Json;
 public partial class JsonHttpClient
 {
 
-    public Task<Response> Patch<T>(string url, T instance) where T : class
+    protected Task<Response> Patch<T>(string url, T instance) where T : class
     {
         HttpContent content = PrepareContent(instance);
 
         return (InternalExceptionHandler(() => Client.PatchAsync(url, content)));
     }
 
-    public Task<Response<T>> Patch<T, U>(string url, U instance)
+    protected Task<Response<T>> Patch<T, U>(string url, U instance)
         where T : class
         where U : class
     {

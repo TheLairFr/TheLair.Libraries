@@ -11,7 +11,7 @@ namespace TheLair.HTTP.Json;
 
 public partial class JsonHttpClient
 {
-    public Task<Response> Post<T>(string url, T instance)
+    protected Task<Response> Post<T>(string url, T instance)
         where T : class
     {
         HttpContent content = PrepareContent(instance);
@@ -19,7 +19,7 @@ public partial class JsonHttpClient
         return (InternalExceptionHandler(() => Client.PostAsync(url, content)));
     }
 
-    public Task<Response<T>> Post<T, U>(string url, U instance) 
+    protected Task<Response<T>> Post<T, U>(string url, U instance) 
         where T : class 
         where U : class 
     {
@@ -28,7 +28,7 @@ public partial class JsonHttpClient
         return (InternalExceptionHandler<T>(() => Client.PostAsync(url, content)));
     }
 
-    public Task<Response> PostFile<T>(string url, T instance, params FileContent[] files) where T : class
+    protected Task<Response> PostFile<T>(string url, T instance, params FileContent[] files) where T : class
     {
         MultipartFormDataContent content = new MultipartFormDataContent();
         content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
@@ -42,8 +42,8 @@ public partial class JsonHttpClient
 
         return (InternalExceptionHandler(() => Client.PostAsync(url, content)));
     }
-    
-    public Task<Response<T>> PostFile<T>(string url, params FileContent[] files) where T : class
+
+    protected Task<Response<T>> PostFile<T>(string url, params FileContent[] files) where T : class
     {
         MultipartFormDataContent content = new MultipartFormDataContent();
         content.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
@@ -56,7 +56,7 @@ public partial class JsonHttpClient
         return (InternalExceptionHandler<T>(() => Client.PostAsync(url, content)));
     }
 
-    public Task<Response<T>> PostFile<T, U>(string url, U instance, params FileContent[] files) where T : class
+    protected Task<Response<T>> PostFile<T, U>(string url, U instance, params FileContent[] files) where T : class
     {
         MultipartFormDataContent content1 = new MultipartFormDataContent();
         content1.Headers.ContentDisposition = new ContentDispositionHeaderValue("form-data");
