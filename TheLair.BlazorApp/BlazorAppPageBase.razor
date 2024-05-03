@@ -22,7 +22,7 @@
         await (Task.Run(BuildRequiredClaims), BuildRequiredClaimsAsync());
         await (Task.Run(BeforeAuthentication), BeforeAuthenticationAsync()); 
         await (Task.Run(AuthenticationCheck), AuthenticationCheckAsync());
-
+        
         (bool, bool) r = await (Task.Run(ClaimChallenge), ClaimChallengeAsync());
 
         if (!r.Item1 || !r.Item2)
@@ -37,6 +37,26 @@
         }
 
         await (Task.Run(AfterAuthentication), AfterAuthenticationAsync());
+    }
+
+    protected sealed override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await AfterFirstRenderAsync();
+        else
+            await AfterRenderAsync();
+        
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    protected sealed override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+            AfterFirstRender();
+        else
+            AfterRender();
+
+        base.OnAfterRender(firstRender);
     }
 
     protected virtual void ServiceInjection() { }
@@ -54,4 +74,8 @@
     protected virtual RoutingInfo GetRedirectionRoute() => new RoutingInfo();
     protected virtual void AfterAuthentication() { }
     protected virtual Task AfterAuthenticationAsync() => Task.CompletedTask;
+    protected virtual void AfterFirstRender() { }
+    protected virtual Task AfterFirstRenderAsync() => Task.CompletedTask;
+    protected virtual void AfterRender() { }
+    protected virtual Task AfterRenderAsync() => Task.CompletedTask;
 }
