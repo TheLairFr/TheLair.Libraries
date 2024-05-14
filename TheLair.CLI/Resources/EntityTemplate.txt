@@ -1,0 +1,8 @@
+﻿using TheLair.Database;
+
+public class {Name} : Entity<{Name}>
+{
+    public override void ModelCreating(EntityTypeBuilder<{Name}> model)
+    {
+    }
+}

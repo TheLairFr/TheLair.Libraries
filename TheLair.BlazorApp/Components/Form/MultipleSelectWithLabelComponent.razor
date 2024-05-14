@@ -1,0 +1,82 @@
+﻿@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+
+@typeparam T
+@typeparam U
+
+<label for="@Id" class="form-label">@Label</label>
+
+<select class="form-select" id="@Id" @onchange="InternalValueChanged" multiple>
+    @foreach (T e in Collection)
+    {
+        <option value="@ValueResolver(e)" selected="@(Value!.Any(i => i?.Equals(e) ?? false))">@NameResolver(e)</option>
+    }
+</select>
+
+@if (MustValidate)
+{
+    <ValidationMessage For="ValueExpression" />
+}
+<div class="mt-3"></div>
+
+@code
+{
+    private Guid Id { get; set; } = Guid.NewGuid();
+
+    [Parameter]
+    public string Label { get; set; } = String.Empty;
+
+    [Parameter]
+    public string Type { get; set; } = String.Empty;
+
+    [Parameter]
+    public U[]? Value { get; set; } = default!;
+
+    [Parameter]
+    public IEnumerable<T> Collection { get; set; } = default!;
+
+    [Parameter]
+    public Expression<Func<U[]>> ValueExpression { get; set; } = null!;
+
+    [Parameter]
+    public Action<U[]> ValueChanged { get; set; } = null!;
+
+    [Parameter]
+    public bool MustValidate { get; set; } = true;
+
+    [Parameter]
+    public Func<T, string> NameResolver { get; set; } = InternalNameGetter;
+
+    [Parameter]
+    public Func<T, U> ValueResolver { get; set; } = InternalValueGetter;
+    
+    [Parameter]
+    public Action<U[]> OnChange { get; set; } = (u) => { };
+
+    private static U InternalValueGetter(T e)
+    {
+        if (typeof(T) == typeof(U))
+            return ((U)(object)e!);
+        throw new Exception("A Value Resolver is needed");
+    }
+
+    private static string InternalNameGetter(T e)
+    {
+        if (e == null)
+            return ("------");
+        return (e.ToString()!);
+    }
+
+    private void InternalValueChanged(ChangeEventArgs e)
+    {
+        string[] values = (e.Value as string[])!;
+        
+        U[] obj = values
+            .Select(i => Collection.First(o => o.ToString() == i))
+            .Select(ValueResolver)
+            .ToArray();
+
+        ValueChanged.Invoke(obj);
+        OnChange.Invoke(obj);
+    }
+}

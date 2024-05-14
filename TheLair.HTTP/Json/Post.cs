@@ -35,7 +35,7 @@ public partial class JsonHttpClient
 
         foreach (FileContent file in files)
         {
-            content.Add(new StreamContent(file.Stream, Convert.ToInt32(file.Size)), "image", file.Name);
+            content.Add(new StreamContent(file.Stream, Convert.ToInt32(file.Size)), file.Parameter ?? "image", file.Name);
         }
         string content2 = JsonConvert.SerializeObject(instance);
         content.Add(new StringContent(content2, Encoding.UTF8, "application/json"));
@@ -50,7 +50,7 @@ public partial class JsonHttpClient
 
         foreach (FileContent file in files)
         {
-            content.Add(new StreamContent(file.Stream, Convert.ToInt32(file.Size)), "image", file.Name);
+            content.Add(new StreamContent(file.Stream, Convert.ToInt32(file.Size)), file.Parameter ?? "image", file.Name);
         }
 
         return (InternalExceptionHandler<T>(() => Client.PostAsync(url, content)));
@@ -63,7 +63,7 @@ public partial class JsonHttpClient
         
         foreach (FileContent file in files)
         {
-            content1.Add(new StreamContent(file.Stream, Convert.ToInt32(file.Size)), "image", file.Name);
+            content1.Add(new StreamContent(file.Stream, Convert.ToInt32(file.Size)), file.Parameter ?? "image", file.Name);
         }
 
         string content2 = JsonConvert.SerializeObject(instance);

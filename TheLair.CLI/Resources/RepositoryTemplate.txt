@@ -1,0 +1,16 @@
+﻿using TheLair.Database;
+
+public class {Name}Repository : Repository<{Name}, {Name}Repository, {Context}Context>
+{
+	public {Name}Repository({Context}Context context) : base(context)
+    {
+		UseSet(context.);
+    }
+
+	public static {Name}DTO ToDTO({Name} i)
+	{
+		return (new {Name}DTO
+		{
+		});
+	}
+}

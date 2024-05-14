@@ -1,0 +1,33 @@
+﻿@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+
+<label for="@Id" class="form-label">@Label</label>
+<InputText class="form-control" id="@Id" Value="@Value" ValueChanged="ValueChanged" ValueExpression="ValueExpression"/>
+@if (Validation)
+{
+    <ValidationMessage For="ValueExpression" />
+}
+<div class="mt-3"></div>
+
+@code
+{
+    private Guid Id { get; set; } = Guid.NewGuid();
+
+    [Parameter]
+    public string Label { get; set; } = String.Empty;
+    
+    [Parameter]
+    public string Type { get; set; } = String.Empty;
+    
+    [Parameter]
+    public string Value { get; set; } = String.Empty;
+    
+    [Parameter]
+    public Expression<Func<string>> ValueExpression { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public bool Validation { get; set; } = true;
+}

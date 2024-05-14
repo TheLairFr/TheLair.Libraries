@@ -1,0 +1,34 @@
+﻿@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="form-check form-switch">
+    @* ReSharper disable once Html.AttributeValueNotResolved *@
+    <input class="form-check-input" type="checkbox" role="switch" id="@Id" @onclick="UpdateValue" checked="@Value">
+    <label class="form-check-label" for="@Id">@Label</label>
+</div>
+
+@code
+{
+    private Guid Id { get; set; } = Guid.NewGuid();
+
+    [Parameter]
+    public string Label { get; set; } = String.Empty;
+    
+    [Parameter]
+    public bool Value { get; set; }
+    
+    [Parameter]
+    public Expression<Func<bool>> ValueExpression { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<bool> ValueChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnChange { get; set; }
+
+    private async Task UpdateValue()
+    {
+        await ValueChanged.InvokeAsync(!Value);
+        await OnChange.InvokeAsync(!Value);
+    }
+}

@@ -1,23 +1,10 @@
-﻿using TheLair.CLI.Commands;
-using TheLair.CLI.Commands.API;
+﻿using Cocona;
+using Cocona.Builder;
+using TheLair.CLI.Commands;
 
-CommandArgumentExec[] exec = new CommandArgumentExec[]
-{
-    new ScaffoldApiClass()
-};
+CoconaAppBuilder builder = CoconaApp.CreateBuilder();
+CoconaApp app = builder.Build();
 
-foreach (CommandArgumentExec command in exec)
-{
-    if (command.TryMatch(args))
-    {
-        command.Exec(args);
-        return;
-    }
-}
+app.AddCommands<CreateCommand>();
 
-Console.WriteLine("Usage:");
-
-foreach (CommandArgumentExec command in exec)
-{
-    Console.WriteLine($"- {command.Arg}");
-}
+app.Run();

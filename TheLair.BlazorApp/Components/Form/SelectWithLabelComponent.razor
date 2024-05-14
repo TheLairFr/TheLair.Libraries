@@ -1,0 +1,73 @@
+﻿@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+
+@typeparam T
+@typeparam U
+
+<label for="@Id" class="form-label">@Label</label>
+<InputSelect class="form-select" id="@Id" Value="@Value" ValueChanged="(U a) => ValueChangedInternal(a)" ValueExpression="ValueExpression">
+    @foreach (T e in Collection)
+    {
+        <option value="@ValueResolver(e)">@NameResolver(e)</option>
+    }
+</InputSelect>
+@if (MustValidate)
+{
+    <ValidationMessage For="ValueExpression" />
+}
+<div class="mt-3"></div>
+
+@code
+{
+    private Guid Id { get; set; } = Guid.NewGuid();
+
+    [Parameter]
+    public string Label { get; set; } = String.Empty;
+
+    [Parameter]
+    public string Type { get; set; } = String.Empty;
+
+    [Parameter]
+    public U Value { get; set; } = default!;
+
+    [Parameter]
+    public IEnumerable<T> Collection { get; set; } = default!;
+
+    [Parameter]
+    public Expression<Func<U>> ValueExpression { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<U?> ValueChanged { get; set; }
+
+    [Parameter]
+    public bool MustValidate { get; set; } = true;
+
+    [Parameter]
+    public Func<T, string> NameResolver { get; set; } = InternalNameGetter;
+
+    [Parameter]
+    public Func<T, object> ValueResolver { get; set; } = InternalValueGetter;
+
+    [Parameter]
+    public Action<T> OnChange { get; set; } = (u) => {};
+
+    private static string InternalValueGetter(T e)
+    {
+        if (e == null)
+            return (String.Empty);
+        return (e.ToString()!);
+    }
+
+    private static string InternalNameGetter(T e)
+    {
+        if (e == null)
+            return ("------");
+        return (e.ToString()!);
+    }
+
+    private void ValueChangedInternal(U value)
+    {
+        ValueChanged.InvokeAsync(value);
+        OnChange.Invoke(Collection.FirstOrDefault(i => ValueResolver(i).Equals(value))!);
+    }
+}

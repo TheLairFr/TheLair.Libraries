@@ -1,0 +1,54 @@
+﻿<div class="accordion-item @Class">
+    <h2 class="accordion-header" id="@Id">
+        <button class="accordion-button @GetButtonClass()" type="button" @onclick="Collapse">
+            @Title
+        </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse @GetContentClass()">
+        <div class="accordion-body">
+            @ChildContent
+        </div>
+    </div>
+</div>
+    
+@code
+{
+    private Guid Id = Guid.NewGuid();
+
+    [Parameter]
+    public bool Collapsed { get; set; }
+
+    [Parameter]
+    public string Title { get; set; } = String.Empty;
+
+    [Parameter]
+    public string Class { get; set; } = String.Empty;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = null!;
+
+    private bool CollapsedState;
+
+    protected override Task OnInitializedAsync()
+    {
+        CollapsedState = Collapsed;
+        return base.OnInitializedAsync();
+    }
+
+    public void Collapse()
+    {
+        CollapsedState = !CollapsedState;
+
+        StateHasChanged();
+    }
+
+    private string GetButtonClass()
+    {
+        return (CollapsedState ? "collapsed" : "");
+    }
+
+    private string GetContentClass()
+    {
+        return (!CollapsedState ? "show" : "");
+    }
+}

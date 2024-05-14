@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+@typeparam ModelTemplate
+
+<EditForm Model="Model" OnValidSubmit="OnValid" OnInvalidSubmit="OnInvalid" class="@GetClass()">
+    <DataAnnotationsValidator />
+    @ChildContent
+</EditForm>
+
+@code
+{
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = null!;
+
+    [Parameter]
+    public ModelTemplate Model { get; set; } = default!;
+
+    [Parameter]
+    public string @class { get; set; } = String.Empty;
+
+    [Parameter]
+    public EventCallback<EditContext> OnValid { get; set; }
+    [Parameter]
+    public EventCallback<EditContext> OnInvalid { get; set; }
+
+    public string GetClass()
+    {
+        return (@class);
+    }
+}
