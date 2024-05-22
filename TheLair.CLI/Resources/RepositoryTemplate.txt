@@ -13,4 +13,11 @@ public class {Name}Repository : Repository<{Name}, {Name}Repository, {Context}Co
 		{
 		});
 	}
+
+	public static {Name} ToEntity({Name}DTO i, {Name}? entity = null)
+    {
+        entity ??= new();
+
+        return (entity);
+    }
 }
