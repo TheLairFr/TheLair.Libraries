@@ -145,6 +145,12 @@ public abstract class Repository<TEntity, TRepository, TContext> : Repository<TE
             .Take(1));
     }
 
+    public IQueryable<TEntity> WithIdsAsQueryable(Guid[] id)
+    {
+        return (Set
+            .Where(i => id.Contains(i.Id)));
+    }
+
     public NewOrExistingEntity<TEntity> MakeNewOrExisting(Func<TEntity, bool> selector, Func<TEntity> factory)
     {
         TEntity? found = Set.FirstOrDefault(selector);
